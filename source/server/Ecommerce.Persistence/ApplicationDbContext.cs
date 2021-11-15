@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Ecommerce.Domain;
 using Ecommerce.Domain.Entities;
 using Ecommerce.Domain.Common;
 
@@ -13,15 +12,32 @@ namespace Ecommerce.Persistence
         // This constructor is used of runit testing
         public ApplicationDbContext()
         {
-
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CartItems> CartItems { get; set; }
+        public DbSet<CustomerOrders> CustomerOrders { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetProperties()
+                    .Where(p => p.ClrType == typeof(string))))
+                property.SetColumnType("varchar(150)");
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,8 +48,6 @@ namespace Ecommerce.Persistence
                 .UseSqlServer("DataSource=app.db");
             }
         }
-
-        //public DbSet<Object> Objects { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

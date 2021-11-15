@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\ProductsFeatures\Commands\" />
     <Folder Include="Features\ProductsFeatures\Queries\" />
   </ItemGroup>
 

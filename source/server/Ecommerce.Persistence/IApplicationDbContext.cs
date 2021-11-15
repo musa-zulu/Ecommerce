@@ -6,7 +6,11 @@ namespace Ecommerce.Persistence
 {
     public interface IApplicationDbContext
     {
-        //DbSet<Object> Objects { get; set; }
+        DbSet<Cart> Carts { get; set; }
+        DbSet<Product> Products { get; set; }
+        DbSet<Category> Categories { get; set; } 
+        DbSet<CartItems> CartItems { get; set; }
+        DbSet<CustomerOrders> CustomerOrders { get; set; }
         Task<int> SaveChangesAsync();
     }
 }

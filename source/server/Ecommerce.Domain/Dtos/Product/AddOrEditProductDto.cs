@@ -1,9 +1,10 @@
-﻿using Ecommerce.Domain.Common;
-using System;
+﻿using System;
+using Ecommerce.Domain.Common;
+using Ecommerce.Domain.Dtos.Category;
 
-namespace Ecommerce.Domain.Entities
+namespace Ecommerce.Domain.Dtos.Product
 {
-    public class Product : BaseEntity
+    public class AddOrEditProductDto : BaseEntity
     {
         public Guid ProductId { get; set; }
         public string Description { get; set; }
@@ -11,6 +12,6 @@ namespace Ecommerce.Domain.Entities
         public string ProductFileName { get; set; }
         public bool IsActive { get; set; }
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; }
+        public AddOrEditCategoryDto Category { get; set; }
     }
 }
