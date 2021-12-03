@@ -1,4 +1,5 @@
 # Ecommerce Onion architecture with ASP.NET Core
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=musa-zulu)](https://github.com/musa-zulu/github-readme-stats)
 
 <br />
 <p align="center">
